@@ -1,0 +1,18 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Word2Markdown: Open in Edge (Normales Fenster)",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "Start-Process msedge \"${workspaceFolder}/index.html\""
+    },
+    {
+      "name": "Word2Markdown: Debug in Edge (isoliertes Profil)",
+      "type": "pwa-msedge",
+      "request": "launch",
+      "file": "${workspaceFolder}/index.html",
+      "webRoot": "${workspaceFolder}"
+    }
+  ]
+}
