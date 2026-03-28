@@ -73,7 +73,7 @@ body {
   display: grid;
   place-items: center;
   text-align: center;
-  min-height: 165px;
+  min-height: 175px;
   width: 100%;
   margin-top: 0.95rem;
   border: 1px dashed #aab9cc;
@@ -197,7 +197,7 @@ body {
 .markdown-output {
   margin-top: 0;
   width: 100%;
-  min-height: clamp(340px, 50dvh, 420px);
+  min-height: clamp(360px, 54dvh, 450px);
   resize: vertical;
   border-radius: 10px;
   border: 1px solid var(--line);
@@ -210,7 +210,7 @@ body {
 }
 
 .markdown-preview {
-  min-height: clamp(340px, 50dvh, 420px);
+  min-height: clamp(360px, 54dvh, 450px);
   border-radius: 10px;
   border: 1px solid var(--line);
   padding: 0.9rem;
@@ -292,11 +292,11 @@ body {
   }
 
   .markdown-output {
-    min-height: clamp(290px, 44dvh, 340px);
+    min-height: clamp(305px, 46dvh, 355px);
   }
 
   .markdown-preview {
-    min-height: clamp(290px, 44dvh, 340px);
+    min-height: clamp(305px, 46dvh, 355px);
   }
 
   .output-head {
