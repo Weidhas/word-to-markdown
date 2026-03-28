@@ -32,7 +32,7 @@ body {
 
 .shell {
   width: min(1120px, 94vw);
-  margin: 2.2rem auto;
+  margin: 1.1rem auto 0.65rem;
 }
 
 .hero h1 {
@@ -42,15 +42,15 @@ body {
 }
 
 .privacy-banner {
-  margin-top: 1rem;
+  margin-top: 0.75rem;
   border: 1px solid var(--line);
   border-radius: 10px;
-  padding: 0.65rem 0.9rem;
+  padding: 0.55rem 0.8rem;
   background: #ffffff;
 }
 
 .grid {
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   display: grid;
   grid-template-columns: 0.95fr 1.05fr;
   gap: 1rem;
@@ -61,7 +61,7 @@ body {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  padding: 1.1rem;
+  padding: 0.95rem;
 }
 
 .panel h2 {
@@ -73,7 +73,7 @@ body {
   display: grid;
   place-items: center;
   text-align: center;
-  min-height: 190px;
+  min-height: 165px;
   width: 100%;
   margin-top: 0.95rem;
   border: 1px dashed #aab9cc;
@@ -197,7 +197,7 @@ body {
 .markdown-output {
   margin-top: 0;
   width: 100%;
-  min-height: 460px;
+  min-height: clamp(340px, 50dvh, 420px);
   resize: vertical;
   border-radius: 10px;
   border: 1px solid var(--line);
@@ -210,7 +210,7 @@ body {
 }
 
 .markdown-preview {
-  min-height: 460px;
+  min-height: clamp(340px, 50dvh, 420px);
   border-radius: 10px;
   border: 1px solid var(--line);
   padding: 0.9rem;
@@ -261,8 +261,8 @@ body {
 }
 
 .site-footer {
-  margin-top: 1rem;
-  padding: 0.8rem 0.15rem 0.2rem;
+  margin-top: 0.7rem;
+  padding: 0.6rem 0.15rem 0.1rem;
   color: #94a3b8;
   font-size: 0.82rem;
 }
@@ -292,11 +292,11 @@ body {
   }
 
   .markdown-output {
-    min-height: 340px;
+    min-height: clamp(290px, 44dvh, 340px);
   }
 
   .markdown-preview {
-    min-height: 340px;
+    min-height: clamp(290px, 44dvh, 340px);
   }
 
   .output-head {

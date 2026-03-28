@@ -4,6 +4,14 @@ import { gfm } from 'https://esm.sh/turndown-plugin-gfm@1.0.2';
 import { marked } from 'https://esm.sh/marked@13.0.2';
 import DOMPurify from 'https://esm.sh/dompurify@3.1.6';
 
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => {
+      // App remains fully functional without offline support.
+    });
+  });
+}
+
 const MAX_FILE_SIZE_MB = 12;
 const IMAGE_PLACEHOLDER = '[Hinweis: Im Originaldokument war hier ein Bild. Bilder werden nicht in Markdown umgewandelt.]';
 

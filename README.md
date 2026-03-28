@@ -18,7 +18,10 @@ https://w2m.lurz.at
 - Kopieren in die Zwischenablage
 - Download als `.md` (UTF-8 mit BOM)
 - Umschaltbare Markdown-Vorschau (sanitiziertes HTML)
+- Kompakteres Layout mit geringerer Gesamthöhe (weniger vertikales Scrolling auf kleineren Displays)
 - Responsive Oberfläche inkl. Footer/Attribution
+- Installierbar als WebApp (PWA) in kompatiblen Browsern (z. B. Edge)
+- App-Icons für Installation (192x192, 512x512, Apple Touch Icon)
 - Azure Static Web Apps kompatibel
 
 ## Änderungen seit Erstellung
@@ -39,6 +42,10 @@ Basierend auf der bisherigen Commit-Historie:
 5. **Footer + Bild-Handling verbessert**
    - Footer mit Attribution ergänzt
    - Bildbehandlung in der Markdown-Konvertierung angepasst
+6. **Layout + PWA ergänzt**
+   - Vertikale Gesamthöhe reduziert, damit die Standardansicht kompakter ist
+   - `manifest.webmanifest`, `sw.js` und Install-Metadaten ergänzt
+   - Erforderliche PNG-Icons für die Installation hinzugefügt
 
 ## Datenschutz
 
@@ -58,6 +65,20 @@ Option B (Python, falls vorhanden):
 - `python -m http.server 4173`
 - Dann `http://localhost:4173` öffnen
 
+## Installation als WebApp (PWA)
+
+Voraussetzungen:
+- Die App wird über `https` oder lokal über `http://localhost` ausgeliefert.
+- Ein Browser mit PWA-Installationssupport (z. B. Microsoft Edge).
+
+Installation in Edge:
+- Seite öffnen
+- Menü `...` -> `Apps` -> `Diese Website als App installieren`
+
+Hinweis bei Änderungen an Manifest/Icons:
+- Bei bereits installierter App kann ein Hard-Reload der Seite nötig sein.
+- Wenn weiterhin alte Icons erscheinen: App deinstallieren und neu installieren.
+
 ## Deployment auf Azure Static Web Apps
 
 1. Repository nach GitHub pushen.
@@ -73,6 +94,10 @@ Option B (Python, falls vorhanden):
 - `index.html`: UI-Struktur, Meta-Tags, Einstiegspunkt
 - `app.css`: Styling und Responsive Layout
 - `app.js`: DOCX->HTML->Markdown Pipeline, Preview, Copy/Download
+- `manifest.webmanifest`: PWA-Metadaten (Name, Farben, Icons, Display-Modus)
+- `sw.js`: Service Worker für App-Shell-Caching und Offline-Basis
+- `icons/`: Installations-Icons (`icon-192.png`, `icon-512.png`, `apple-touch-icon.png`)
+- `favicon.svg`: Vektor-Favicon der Web-App
 - `staticwebapp.config.json`: SPA-Fallback, Sicherheitsheader, MIME-Typen
 - `robots.txt`: Crawler-Vorgaben
 
