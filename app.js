@@ -1,6 +1,8 @@
 import mammoth from 'https://esm.sh/mammoth@1.8.0?bundle';
 import TurndownService from 'https://esm.sh/turndown@7.2.0';
 import { gfm } from 'https://esm.sh/turndown-plugin-gfm@1.0.2';
+import { marked } from 'https://esm.sh/marked@13.0.2';
+import DOMPurify from 'https://esm.sh/dompurify@3.1.6';
 
 const MAX_FILE_SIZE_MB = 12;
 
@@ -13,13 +15,16 @@ const dom = {
   status: document.getElementById('status'),
   clearBtn: document.getElementById('clearBtn'),
   copyBtn: document.getElementById('copyBtn'),
+  previewBtn: document.getElementById('previewBtn'),
   downloadBtn: document.getElementById('downloadBtn'),
-  output: document.getElementById('markdownOutput')
+  output: document.getElementById('markdownOutput'),
+  preview: document.getElementById('markdownPreview')
 };
 
 const state = {
   selectedFile: null,
-  markdown: ''
+  markdown: '',
+  isPreviewMode: false
 };
 
 const UTF8_BOM = '\uFEFF';
@@ -52,6 +57,7 @@ function setupEvents() {
   dom.input.addEventListener('change', onInputChange);
   dom.clearBtn.addEventListener('click', onClear);
   dom.copyBtn.addEventListener('click', onCopy);
+  dom.previewBtn.addEventListener('click', onTogglePreview);
   dom.downloadBtn.addEventListener('click', onDownload);
 
   ['dragenter', 'dragover'].forEach((eventName) => {
@@ -101,7 +107,9 @@ async function selectFile(file) {
 
   state.selectedFile = file;
   state.markdown = '';
+  state.isPreviewMode = false;
   dom.output.value = '';
+  dom.preview.innerHTML = '';
 
   dom.fileMeta.hidden = false;
   dom.fileName.textContent = file.name;
@@ -109,7 +117,9 @@ async function selectFile(file) {
 
   dom.clearBtn.disabled = false;
   dom.copyBtn.disabled = true;
+  dom.previewBtn.disabled = true;
   dom.downloadBtn.disabled = true;
+  updateOutputMode();
 
   setStatus('Datei erkannt. Starte Konvertierung...');
   await onConvert();
@@ -140,8 +150,10 @@ async function onConvert() {
 
     state.markdown = markdown.trim();
     dom.output.value = state.markdown;
+    renderPreview();
 
     dom.copyBtn.disabled = state.markdown.length === 0;
+    dom.previewBtn.disabled = state.markdown.length === 0;
     dom.downloadBtn.disabled = state.markdown.length === 0;
 
     const warningCount = Array.isArray(result.messages) ? result.messages.length : 0;
@@ -237,19 +249,66 @@ function onDownload() {
   setStatus('Markdown-Datei heruntergeladen.');
 }
 
+function onTogglePreview() {
+  if (!state.markdown) {
+    setError('Es gibt noch keinen Markdown-Inhalt für die Vorschau.');
+    return;
+  }
+
+  state.isPreviewMode = !state.isPreviewMode;
+  if (state.isPreviewMode) {
+    renderPreview();
+  }
+  updateOutputMode();
+}
+
+function renderPreview() {
+  if (!state.markdown) {
+    dom.preview.innerHTML = '';
+    return;
+  }
+
+  const html = marked.parse(state.markdown, {
+    breaks: true,
+    gfm: true,
+    mangle: false,
+    headerIds: false
+  });
+
+  const safeHtml = DOMPurify.sanitize(html, {
+    USE_PROFILES: { html: true }
+  });
+
+  dom.preview.innerHTML = safeHtml;
+}
+
+function updateOutputMode() {
+  const showPreview = state.isPreviewMode && state.markdown.length > 0;
+
+  dom.preview.hidden = !showPreview;
+  dom.output.hidden = showPreview;
+
+  dom.previewBtn.setAttribute('aria-pressed', showPreview ? 'true' : 'false');
+  dom.previewBtn.classList.toggle('is-active', showPreview);
+}
+
 function onClear() {
   state.selectedFile = null;
   state.markdown = '';
+  state.isPreviewMode = false;
 
   dom.input.value = '';
   dom.output.value = '';
+  dom.preview.innerHTML = '';
   dom.fileMeta.hidden = true;
   dom.fileName.textContent = '-';
   dom.fileSize.textContent = '-';
 
   dom.clearBtn.disabled = true;
   dom.copyBtn.disabled = true;
+  dom.previewBtn.disabled = true;
   dom.downloadBtn.disabled = true;
+  updateOutputMode();
 
   setStatus('');
 }

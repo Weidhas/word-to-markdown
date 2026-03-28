@@ -47,9 +47,12 @@
             <h2>Markdown</h2>
             <div class="actions">
               <button id="copyBtn" class="btn btn-ghost" disabled>Kopieren</button>
+              <button id="previewBtn" class="btn btn-ghost" disabled aria-pressed="false">Vorschau</button>
               <button id="downloadBtn" class="btn btn-primary" disabled>.md herunterladen</button>
             </div>
           </div>
+
+          <div id="markdownPreview" class="markdown-preview" hidden aria-live="polite"></div>
 
           <textarea
             id="markdownOutput"
