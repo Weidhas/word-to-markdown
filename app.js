@@ -11,7 +11,6 @@ const dom = {
   fileName: document.getElementById('fileName'),
   fileSize: document.getElementById('fileSize'),
   status: document.getElementById('status'),
-  convertBtn: document.getElementById('convertBtn'),
   clearBtn: document.getElementById('clearBtn'),
   copyBtn: document.getElementById('copyBtn'),
   downloadBtn: document.getElementById('downloadBtn'),
@@ -22,6 +21,8 @@ const state = {
   selectedFile: null,
   markdown: ''
 };
+
+const UTF8_BOM = '\uFEFF';
 
 const turndownService = new TurndownService({
   headingStyle: 'atx',
@@ -49,7 +50,6 @@ setupEvents();
 
 function setupEvents() {
   dom.input.addEventListener('change', onInputChange);
-  dom.convertBtn.addEventListener('click', onConvert);
   dom.clearBtn.addEventListener('click', onClear);
   dom.copyBtn.addEventListener('click', onCopy);
   dom.downloadBtn.addEventListener('click', onDownload);
@@ -68,23 +68,23 @@ function setupEvents() {
     });
   });
 
-  dom.dropzone.addEventListener('drop', (event) => {
+  dom.dropzone.addEventListener('drop', async (event) => {
     const file = event.dataTransfer?.files?.[0];
     if (file) {
-      selectFile(file);
+      await selectFile(file);
     }
   });
 }
 
-function onInputChange(event) {
+async function onInputChange(event) {
   const file = event.target.files?.[0];
   if (!file) {
     return;
   }
-  selectFile(file);
+  await selectFile(file);
 }
 
-function selectFile(file) {
+async function selectFile(file) {
   const lowerName = file.name.toLowerCase();
   const isDocx = lowerName.endsWith('.docx');
   const isWithinSizeLimit = file.size <= MAX_FILE_SIZE_MB * 1024 * 1024;
@@ -107,12 +107,12 @@ function selectFile(file) {
   dom.fileName.textContent = file.name;
   dom.fileSize.textContent = `${(file.size / (1024 * 1024)).toFixed(2)} MB`;
 
-  dom.convertBtn.disabled = false;
   dom.clearBtn.disabled = false;
   dom.copyBtn.disabled = true;
   dom.downloadBtn.disabled = true;
 
-  setStatus('Datei bereit zur Konvertierung.');
+  setStatus('Datei erkannt. Starte Konvertierung...');
+  await onConvert();
 }
 
 async function onConvert() {
@@ -123,7 +123,7 @@ async function onConvert() {
 
   try {
     setStatus('Konvertierung läuft...');
-    dom.convertBtn.disabled = true;
+    dom.clearBtn.disabled = true;
 
     const arrayBuffer = await state.selectedFile.arrayBuffer();
     const result = await mammoth.convertToHtml(
@@ -134,7 +134,8 @@ async function onConvert() {
       }
     );
 
-    let markdown = turndownService.turndown(result.value || '');
+    const normalizedHtml = normalizeHtmlForMarkdown(result.value || '');
+    let markdown = turndownService.turndown(normalizedHtml);
     markdown = postProcessMarkdown(markdown);
 
     state.markdown = markdown.trim();
@@ -153,16 +154,42 @@ async function onConvert() {
     const message = error instanceof Error ? error.message : 'Unbekannter Fehler';
     setError(`Konvertierung fehlgeschlagen: ${message}`);
   } finally {
-    dom.convertBtn.disabled = !state.selectedFile;
+    dom.clearBtn.disabled = !state.selectedFile;
   }
 }
 
 function postProcessMarkdown(input) {
   return input
+    .normalize('NFC')
+    .replace(/\u00A0/g, ' ')
     .replace(/\n{3,}/g, '\n\n')
     .replace(/\t/g, '  ')
     .replace(/\n\s+\n/g, '\n\n')
     .trim();
+}
+
+function normalizeHtmlForMarkdown(rawHtml) {
+  const parser = new DOMParser();
+  const documentFromHtml = parser.parseFromString(rawHtml, 'text/html');
+  const walker = documentFromHtml.createTreeWalker(documentFromHtml.body, NodeFilter.SHOW_TEXT);
+
+  while (walker.nextNode()) {
+    const textNode = walker.currentNode;
+    if (textNode.nodeValue) {
+      textNode.nodeValue = textNode.nodeValue.replace(/\u00A0/g, ' ').normalize('NFC');
+    }
+  }
+
+  documentFromHtml.body.querySelectorAll('[alt],[title]').forEach((node) => {
+    if (node.hasAttribute('alt')) {
+      node.setAttribute('alt', (node.getAttribute('alt') || '').replace(/\u00A0/g, ' ').normalize('NFC'));
+    }
+    if (node.hasAttribute('title')) {
+      node.setAttribute('title', (node.getAttribute('title') || '').replace(/\u00A0/g, ' ').normalize('NFC'));
+    }
+  });
+
+  return documentFromHtml.body.innerHTML;
 }
 
 async function onCopy() {
@@ -197,7 +224,7 @@ function onDownload() {
     .replace(/[^a-zA-Z0-9-_ ]/g, '')
     .trim() || 'document';
 
-  const blob = new Blob([state.markdown], { type: 'text/markdown;charset=utf-8' });
+  const blob = new Blob([UTF8_BOM, state.markdown], { type: 'text/markdown;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.href = url;
@@ -220,12 +247,11 @@ function onClear() {
   dom.fileName.textContent = '-';
   dom.fileSize.textContent = '-';
 
-  dom.convertBtn.disabled = true;
   dom.clearBtn.disabled = true;
   dom.copyBtn.disabled = true;
   dom.downloadBtn.disabled = true;
 
-  setStatus('Bitte eine .docx Datei auswählen.');
+  setStatus('');
 }
 
 function setStatus(message) {
