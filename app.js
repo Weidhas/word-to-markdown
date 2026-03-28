@@ -5,6 +5,7 @@ import { marked } from 'https://esm.sh/marked@13.0.2';
 import DOMPurify from 'https://esm.sh/dompurify@3.1.6';
 
 const MAX_FILE_SIZE_MB = 12;
+const IMAGE_PLACEHOLDER = '[Hinweis: Im Originaldokument war hier ein Bild. Bilder werden nicht in Markdown umgewandelt.]';
 
 const dom = {
   input: document.getElementById('docxInput'),
@@ -41,13 +42,8 @@ turndownService.use(gfm);
 
 turndownService.addRule('figureToImageNote', {
   filter: ['img'],
-  replacement(content, node) {
-    const alt = node.getAttribute('alt') || 'image';
-    const src = node.getAttribute('src') || '';
-    if (!src || src.startsWith('data:')) {
-      return `\n![${alt}](#embedded-image)\n`;
-    }
-    return `\n![${alt}](${src})\n`;
+  replacement() {
+    return `\n${IMAGE_PLACEHOLDER}\n`;
   }
 });
 

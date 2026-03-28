@@ -75,6 +75,7 @@ body {
   text-align: center;
   min-height: 190px;
   width: 100%;
+  margin-top: 0.45rem;
   border: 1px dashed #aab9cc;
   border-radius: 12px;
   background: #fcfdff;
@@ -249,6 +250,31 @@ body {
   border: 1px solid #d7e1ed;
   padding: 0.45rem 0.55rem;
   text-align: left;
+}
+
+.site-footer {
+  margin-top: 1rem;
+  padding: 0.8rem 0.15rem 0.2rem;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+.site-footer p {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.site-footer a {
+  color: #0f766e;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.site-footer a:hover {
+  border-bottom-color: #0f766e;
 }
 
 @media (max-width: 960px) {
