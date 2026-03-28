@@ -1,4 +1,4 @@
-# Word2Markdown (Browser-only)
+# Word To Markdown (Browser-only)
 
 Eine statische Web-App, die `.docx` lokal im Browser in Markdown umwandelt.
 
