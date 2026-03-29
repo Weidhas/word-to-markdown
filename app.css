@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
 :root {
-  --bg: #f8fafc;
-  --panel: #ffffff;
-  --ink: #0f172a;
-  --muted: #475569;
-  --line: #dbe3ee;
-  --accent: #0f766e;
-  --error: #b13e5b;
+  --bg: #1e4020;
+  --panel: rgba(255, 255, 255, 0.09);
+  --ink: #ffffff;
+  --muted: rgba(255, 255, 255, 0.72);
+  --line: rgba(255, 255, 255, 0.18);
+  --accent: #5aab60;
+  --error: #ff8a80;
   --radius: 12px;
-  --shadow: 0 6px 14px rgba(15, 23, 42, 0.05);
+  --shadow: 0 6px 20px rgba(0, 0, 0, 0.28);
 }
 
 * {
@@ -26,7 +26,8 @@ body {
 body {
   font-family: 'Space Grotesk', sans-serif;
   color: var(--ink);
-  background: var(--bg);
+  background: linear-gradient(135deg, #1a3a1c 0%, #2a5c2e 50%, #3a7840 100%);
+  min-height: 100dvh;
   overflow-x: hidden;
 }
 
@@ -46,7 +47,8 @@ body {
   border: 1px solid var(--line);
   border-radius: 10px;
   padding: 0.55rem 0.8rem;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--muted);
 }
 
 .grid {
@@ -76,9 +78,9 @@ body {
   min-height: 175px;
   width: 100%;
   margin-top: 0.95rem;
-  border: 1px dashed #aab9cc;
+  border: 1px dashed rgba(255, 255, 255, 0.35);
   border-radius: 12px;
-  background: #fcfdff;
+  background: rgba(255, 255, 255, 0.05);
   cursor: pointer;
   padding: 1rem;
   transition: border-color 180ms ease, background 180ms ease;
@@ -87,7 +89,7 @@ body {
 .dropzone:hover,
 .dropzone.is-dragover {
   border-color: var(--accent);
-  background: #f5fbfa;
+  background: rgba(90, 171, 96, 0.12);
 }
 
 .dropzone input {
@@ -110,7 +112,7 @@ body {
   padding: 0.7rem 0.9rem;
   border: 1px solid var(--line);
   border-radius: 10px;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.07);
 }
 
 .file-meta p {
@@ -149,9 +151,14 @@ body {
 }
 
 .btn-ghost {
-  background: #ffffff;
-  border-color: #c8d5e5;
-  color: var(--ink);
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.45);
+  color: #ffffff;
+}
+
+.btn-ghost:hover:enabled {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.7);
 }
 
 .status {
@@ -190,8 +197,8 @@ body {
 }
 
 .btn.is-active {
-  background: #e6f2f1;
-  border-color: #9dcfc9;
+  background: rgba(90, 171, 96, 0.25);
+  border-color: rgba(90, 171, 96, 0.7);
 }
 
 .markdown-output {
@@ -205,8 +212,8 @@ body {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 0.9rem;
   line-height: 1.5;
-  color: #0f172a;
-  background: #ffffff;
+  color: #e8f5e9;
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .markdown-preview {
@@ -215,8 +222,8 @@ body {
   border: 1px solid var(--line);
   padding: 0.9rem;
   line-height: 1.6;
-  color: #0f172a;
-  background: #ffffff;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.2);
   overflow: auto;
 }
 
@@ -232,8 +239,8 @@ body {
   overflow-x: auto;
   padding: 0.7rem;
   border-radius: 8px;
-  background: #f6f8fb;
-  border: 1px solid #e4eaf2;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .markdown-preview code {
@@ -244,8 +251,8 @@ body {
 .markdown-preview blockquote {
   margin: 0.8rem 0;
   padding-left: 0.8rem;
-  border-left: 3px solid #b7c5d8;
-  color: #334155;
+  border-left: 3px solid rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .markdown-preview table {
@@ -255,7 +262,7 @@ body {
 
 .markdown-preview th,
 .markdown-preview td {
-  border: 1px solid #d7e1ed;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 0.45rem 0.55rem;
   text-align: left;
 }
@@ -263,7 +270,7 @@ body {
 .site-footer {
   margin-top: 0.7rem;
   padding: 0.6rem 0.15rem 0.1rem;
-  color: #94a3b8;
+  color: rgba(255, 255, 255, 0.5);
   font-size: 0.82rem;
 }
 
