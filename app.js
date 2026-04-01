@@ -326,3 +326,39 @@ function setError(message) {
   dom.status.classList.add('error');
   dom.status.textContent = message;
 }
+
+/* ── Easter egg: Konami code ↑↑↓↓←→←→BA ──────────────────── */
+
+const KONAMI = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+let konamiPos = 0;
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === KONAMI[konamiPos]) {
+    konamiPos++;
+    if (konamiPos === KONAMI.length) {
+      konamiPos = 0;
+      showEasterEgg();
+    }
+  } else {
+    konamiPos = e.key === KONAMI[0] ? 1 : 0;
+  }
+});
+
+function showEasterEgg() {
+  const overlay = document.getElementById('easterOverlay');
+  overlay.hidden = false;
+  overlay.focus();
+}
+
+function hideEasterEgg() {
+  document.getElementById('easterOverlay').hidden = true;
+}
+
+document.addEventListener('click', (e) => {
+  if (e.target.closest('#easterOverlay')) hideEasterEgg();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && !document.getElementById('easterOverlay')?.hidden) {
+    hideEasterEgg();
+  }
+});
