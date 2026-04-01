@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
 :root {
-  --bg: #f0faf4;
+  --bg: #f8fafc;
   --panel: #ffffff;
   --ink: #0f172a;
   --muted: #475569;
-  --line: #bbf7d0;
-  --accent: #16a34a;
+  --line: #dbe3ee;
+  --accent: #0f766e;
   --error: #b13e5b;
   --radius: 12px;
-  --shadow: 0 6px 14px rgba(22, 163, 74, 0.08);
+  --shadow: 0 6px 14px rgba(15, 23, 42, 0.05);
 }
 
 * {
@@ -87,7 +87,7 @@ body {
 .dropzone:hover,
 .dropzone.is-dragover {
   border-color: var(--accent);
-  background: #f0fdf4;
+  background: #f5fbfa;
 }
 
 .dropzone input {
@@ -190,8 +190,8 @@ body {
 }
 
 .btn.is-active {
-  background: #dcfce7;
-  border-color: #86efac;
+  background: #e6f2f1;
+  border-color: #9dcfc9;
 }
 
 .markdown-output {
@@ -315,108 +315,4 @@ body {
   .output-head h2 {
     margin: 0.15rem 0;
   }
-}
-
-/* ── Easter decorations ──────────────────────────────────────── */
-
-.hero {
-  position: relative;
-}
-
-.easter-decor {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.easter-decor .egg {
-  position: absolute;
-  font-size: 1.3rem;
-  opacity: 0.75;
-  animation: egg-float 4s ease-in-out infinite;
-}
-
-.easter-decor .egg:nth-child(1) { left: 3%;   top: 15%; animation-delay: 0s; }
-.easter-decor .egg:nth-child(2) { right: 5%;  top: 20%; animation-delay: 1s; }
-.easter-decor .egg:nth-child(3) { left: 18%;  bottom: 5%; animation-delay: 2s; }
-.easter-decor .egg:nth-child(4) { right: 18%; bottom: 5%; animation-delay: 0.6s; }
-
-@keyframes egg-float {
-  0%, 100% { transform: translateY(0) rotate(-6deg); }
-  50%       { transform: translateY(-8px) rotate(6deg); }
-}
-
-/* ── Easter egg overlay (Konami code) ────────────────────────── */
-
-.easter-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.82);
-  z-index: 9999;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  outline: none;
-}
-
-.easter-overlay[hidden] {
-  display: none;
-}
-
-.easter-overlay-content {
-  text-align: center;
-  animation: fadeIn 0.4s ease;
-}
-
-.easter-msg {
-  font-size: clamp(1.6rem, 4vw, 2.4rem);
-  font-weight: 700;
-  color: #f0faf4;
-  margin: 0 0 0.4rem;
-}
-
-.easter-hint {
-  font-size: 0.95rem;
-  color: #86efac;
-  margin: 0 0 2rem;
-  opacity: 0.8;
-}
-
-.bunny-lane {
-  position: relative;
-  width: 100vw;
-  height: 4.5rem;
-  overflow: hidden;
-}
-
-.bunny {
-  position: absolute;
-  font-size: 2.4rem;
-  bottom: 0;
-  animation: bunny-hop linear infinite;
-}
-
-.bunny:nth-child(1) { animation-duration: 3.2s; animation-delay: 0s; }
-.bunny:nth-child(2) { animation-duration: 2.6s; animation-delay: 0.9s; }
-.bunny:nth-child(3) { animation-duration: 3.8s; animation-delay: 1.7s; }
-.bunny:nth-child(4) { animation-duration: 2.9s; animation-delay: 2.4s; }
-
-@keyframes bunny-hop {
-  0%   { left: -10%; transform: translateY(0); }
-  12%  { transform: translateY(-28px); }
-  24%  { transform: translateY(0); }
-  36%  { transform: translateY(-22px); }
-  48%  { transform: translateY(0); }
-  60%  { transform: translateY(-18px); }
-  72%  { transform: translateY(0); }
-  84%  { transform: translateY(-14px); }
-  100% { left: 110%; transform: translateY(0); }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to   { opacity: 1; transform: translateY(0); }
 }
