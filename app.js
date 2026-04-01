@@ -56,52 +56,6 @@ turndownService.addRule('figureToImageNote', {
 });
 
 setupEvents();
-setupEasterEgg();
-
-function setupEasterEgg() {
-  let clickCount = 0;
-  let resetTimer = null;
-
-  function onEasterClick(btn) {
-    if (!btn.disabled) return;
-    clickCount++;
-    clearTimeout(resetTimer);
-    resetTimer = setTimeout(() => {
-      clickCount = 0;
-    }, 2000);
-    if (clickCount >= 5) {
-      clickCount = 0;
-      triggerEggRain();
-    }
-  }
-
-  [dom.clearBtn, dom.copyBtn, dom.previewBtn, dom.downloadBtn].forEach((btn) => {
-    btn.addEventListener('pointerdown', () => onEasterClick(btn));
-  });
-}
-
-function triggerEggRain() {
-  const symbols = ['🥚', '🐣', '🐰', '🌷', '🌸', '🌺', '🦋'];
-  for (let i = 0; i < 28; i++) {
-    setTimeout(() => {
-      const el = document.createElement('span');
-      el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-      el.className = 'egg-rain-item';
-      const rotStart = Math.random() * 30 - 15;
-      const rotEnd = Math.random() * 360 - 180;
-      el.style.cssText = `
-        left: ${Math.random() * 100}vw;
-        font-size: ${1.2 + Math.random() * 1.8}rem;
-        --duration: ${1.6 + Math.random() * 1.8}s;
-        --rot-start: ${rotStart}deg;
-        --rot-end: ${rotEnd}deg;
-      `;
-      document.body.appendChild(el);
-      el.addEventListener('animationend', () => el.remove());
-    }, i * 90);
-  }
-  setStatus('🐣 Frohe Ostern! 🥚');
-}
 
 function setupEvents() {
   dom.input.addEventListener('change', onInputChange);

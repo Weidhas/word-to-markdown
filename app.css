@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
 :root {
-  --bg: #f0fdf4;
+  --bg: #f8fafc;
   --panel: #ffffff;
-  --ink: #1a2e22;
-  --muted: #4b7a5a;
-  --line: #bbf7d0;
-  --accent: #16a34a;
-  --error: #dc2626;
+  --ink: #0f172a;
+  --muted: #475569;
+  --line: #dbe3ee;
+  --accent: #0f766e;
+  --error: #b13e5b;
   --radius: 12px;
-  --shadow: 0 6px 14px rgba(22, 101, 52, 0.08);
+  --shadow: 0 6px 14px rgba(15, 23, 42, 0.05);
 }
 
 * {
@@ -87,7 +87,7 @@ body {
 .dropzone:hover,
 .dropzone.is-dragover {
   border-color: var(--accent);
-  background: #dcfce7;
+  background: #f5fbfa;
 }
 
 .dropzone input {
@@ -135,7 +135,7 @@ body {
 }
 
 .btn:hover:enabled {
-  filter: brightness(0.93);
+  filter: none;
 }
 
 .btn:disabled {
@@ -190,8 +190,8 @@ body {
 }
 
 .btn.is-active {
-  background: #dcfce7;
-  border-color: #86efac;
+  background: #e6f2f1;
+  border-color: #9dcfc9;
 }
 
 .markdown-output {
@@ -263,7 +263,7 @@ body {
 .site-footer {
   margin-top: 0.7rem;
   padding: 0.6rem 0.15rem 0.1rem;
-  color: #4b7a5a;
+  color: #94a3b8;
   font-size: 0.82rem;
 }
 
@@ -315,25 +315,4 @@ body {
   .output-head h2 {
     margin: 0.15rem 0;
   }
-}
-
-/* Easter egg rain animation */
-@keyframes eggRainFall {
-  from {
-    transform: translateY(-60px) rotate(var(--rot-start, 0deg));
-    opacity: 1;
-  }
-  to {
-    transform: translateY(110vh) rotate(var(--rot-end, 360deg));
-    opacity: 0;
-  }
-}
-
-.egg-rain-item {
-  position: fixed;
-  top: 0;
-  pointer-events: none;
-  user-select: none;
-  z-index: 9999;
-  animation: eggRainFall var(--duration, 2s) ease-in forwards;
 }
