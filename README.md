@@ -1,4 +1,4 @@
-# Word To Markdown (Browser-only)
+# Word To Markdown (Browser-only) 🐣
 
 Eine statische Web-App, die `.docx` lokal im Browser in Markdown umwandelt.
 
@@ -46,6 +46,11 @@ Basierend auf der bisherigen Commit-Historie:
    - Vertikale Gesamthöhe reduziert, damit die Standardansicht kompakter ist
    - `manifest.webmanifest`, `sw.js` und Install-Metadaten ergänzt
    - Erforderliche PNG-Icons für die Installation hinzugefügt
+7. **Oster-Edition 🐣** (`Easter theme`)
+   - Frühlings-grünes Farbschema (Spring-Green Palette)
+   - Site-Icon als Osterei (SVG-Favicon neu gestaltet)
+   - Oster-Emojis in Titel, Dropzone und Footer
+   - Easter Egg: Konami-Code (↑↑↓↓←→←→BA) zeigt Ostergruß
 
 ## Datenschutz
 

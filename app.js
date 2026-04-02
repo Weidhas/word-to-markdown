@@ -56,6 +56,7 @@ turndownService.addRule('figureToImageNote', {
 });
 
 setupEvents();
+setupEasterEgg();
 
 function setupEvents() {
   dom.input.addEventListener('change', onInputChange);
@@ -325,4 +326,39 @@ function setStatus(message) {
 function setError(message) {
   dom.status.classList.add('error');
   dom.status.textContent = message;
+}
+
+function setupEasterEgg() {
+  const KONAMI = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+  const EASTER_EGG_TIMEOUT_MS = 4000;
+  let idx = 0;
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === KONAMI[idx]) {
+      idx++;
+      if (idx === KONAMI.length) {
+        idx = 0;
+        showEasterEggMessage(EASTER_EGG_TIMEOUT_MS);
+      }
+    } else {
+      idx = e.key === KONAMI[0] ? 1 : 0;
+    }
+  });
+}
+
+function showEasterEggMessage(timeoutMs) {
+  const overlay = document.createElement('div');
+  overlay.setAttribute('role', 'status');
+  overlay.setAttribute('aria-live', 'assertive');
+  overlay.style.cssText =
+    'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);' +
+    'background:#fff;border:2px solid #16a34a;border-radius:16px;' +
+    'padding:2rem 2.5rem;text-align:center;font-size:1.5rem;' +
+    'z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,.15);cursor:pointer;';
+  overlay.innerHTML =
+    '🥚🐣🐰 Frohe Ostern! 🌷🐥🥚<br>' +
+    '<small style="font-size:0.85rem;color:#475569">Du hast den Konami-Code gefunden!</small>';
+  overlay.addEventListener('click', () => overlay.remove());
+  document.body.appendChild(overlay);
+  setTimeout(() => overlay.remove(), timeoutMs);
 }

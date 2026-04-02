@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
 :root {
-  --bg: #f8fafc;
+  --bg: #f0fdf4;
   --panel: #ffffff;
   --ink: #0f172a;
   --muted: #475569;
-  --line: #dbe3ee;
-  --accent: #0f766e;
+  --line: #bbf7d0;
+  --accent: #16a34a;
   --error: #b13e5b;
   --radius: 12px;
   --shadow: 0 6px 14px rgba(15, 23, 42, 0.05);
@@ -87,7 +87,7 @@ body {
 .dropzone:hover,
 .dropzone.is-dragover {
   border-color: var(--accent);
-  background: #f5fbfa;
+  background: #dcfce7;
 }
 
 .dropzone input {
@@ -190,8 +190,8 @@ body {
 }
 
 .btn.is-active {
-  background: #e6f2f1;
-  border-color: #9dcfc9;
+  background: #dcfce7;
+  border-color: #86efac;
 }
 
 .markdown-output {
